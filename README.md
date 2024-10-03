@@ -17,7 +17,7 @@
 ## 資料來源
 
 - 圖片：[ExpTech Studio](https://github.com/exptechtw)
-- 音效：[DPIP防災內音效](https://github.com /ExpTechTW/DPIP/tree/main/android/app/src/main/res/raw)
+- 音效：[DPIP防災內音效](https://github.com/ExpTechTW/DPIP/tree/main/android/app/src/main/res/raw)
 
 ## 使用
 

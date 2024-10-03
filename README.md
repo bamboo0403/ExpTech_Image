@@ -21,4 +21,4 @@
 
 ## 使用
 
-從 [Release 頁面](https://github.com/2008-04-03/ExpTech_Image/releases/tag/main) 上取得。
+從 [Release 頁面](https://github.com/2008-04-03/ExpTech_Image/releases/latest) 上取得。

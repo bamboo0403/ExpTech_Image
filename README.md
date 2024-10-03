@@ -23,4 +23,5 @@
 
 從 [Release 頁面](https://github.com/2008-04-03/ExpTech_Image/releases/latest) 上取得。
 
+## 範例圖片
 ![image](https://i.ibb.co/jzDj7Sq/Snipaste-2024-10-03-17-46-24.png)

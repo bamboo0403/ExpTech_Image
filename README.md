@@ -24,4 +24,18 @@
 從 [Release 頁面](https://github.com/2008-04-03/ExpTech_Image/releases/latest) 上取得。
 
 ## 範例圖片
-![image](https://i.ibb.co/jzDj7Sq/Snipaste-2024-10-03-17-46-24.png)
+
+### 總覽
+![image](https://i.ibb.co/sQsgqKc/overview.png)
+
+### 震度速報
+![image](https://i.ibb.co/cTLmyVn/intensity.png)
+
+### 地震速報
+![image](https://i.ibb.co/bBRWdV3/eew.png)
+
+### 地震報告
+![image](https://i.ibb.co/N3m4ZTk/report.png)
+
+### 長週期地震動
+![image](https://i.ibb.co/GCqy70Z/lpgm.png)

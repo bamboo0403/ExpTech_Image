@@ -17,8 +17,10 @@
 ## 資料來源
 
 - 圖片：[ExpTech Studio](https://github.com/exptechtw)
-- 音效：[DPIP防災內音效](https://github.com/ExpTechTW/DPIP/tree/main/android/app/src/main/res/raw)
+- 音效：[DPIP防災內音效](https://github.com /ExpTechTW/DPIP/tree/main/android/app/src/main/res/raw)
 
 ## 使用
 
 從 [Release 頁面](https://github.com/2008-04-03/ExpTech_Image/releases/latest) 上取得。
+
+![image](https://i.ibb.co/jzDj7Sq/Snipaste-2024-10-03-17-46-24.png)

@@ -20,5 +20,5 @@
 - 音效：[DPIP防災內音效](https://github.com/ExpTechTW/DPIP/tree/main/android/app/src/main/res/raw)
 
 ## 使用
-
+e
 從 [Release 頁面](https://github.com/2008-04-03/ExpTech_Image/releases/tag/main) 上取得。

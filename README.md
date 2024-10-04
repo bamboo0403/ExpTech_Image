@@ -19,6 +19,11 @@
 - 圖片：[ExpTech Studio](https://github.com/exptechtw)
 - 音效：[DPIP防災內音效](https://github.com/ExpTechTW/DPIP/tree/main/android/app/src/main/res/raw)
 
+## 製作者
+
+[・ω・（竹子）](https://github.com/2008-04-03)
+[hugohugo130](https://github.com/hugohugo130)
+
 ## 使用
 
 從 [Release 頁面](https://github.com/2008-04-03/ExpTech_Image/releases/latest) 上取得。

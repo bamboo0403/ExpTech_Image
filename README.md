@@ -21,8 +21,8 @@
 
 ## 製作者
 
-[・ω・（竹子）](https://github.com/2008-04-03)
-[hugohugo130](https://github.com/hugohugo130)
+- [2008-04-03](https://github.com/2008-04-03)
+- [hugohugo130](https://github.com/hugohugo130)
 
 ## 使用
 

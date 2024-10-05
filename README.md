@@ -21,8 +21,8 @@
 
 ## 製作者
 
-- [2008-04-03](https://github.com/2008-04-03)
-- [hugohugo130](https://github.com/hugohugo130)
+- [2008-04-03](https://github.com/2008-04-03) `程式開發` `文檔`
+- [hugohugo130](https://github.com/hugohugo130) `程式開發`
 
 ## 使用
 

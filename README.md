@@ -33,7 +33,7 @@
 ## 資料來源
 
 - [ExpTech Studio](https://github.com/exptechtw) `圖片`
-
+- [DPIP防災](https://github.com/ExpTechTW/DPIP/tree/main/android/app/src/main/res/raw) `音效`
 ## 開發者
 
 - [2008-04-03](https://github.com/2008-04-03) `程式開發` `文檔`

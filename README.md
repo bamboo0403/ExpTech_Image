@@ -49,16 +49,16 @@
 ## 範例圖片
 
 ### 總覽
-![image](https://i.ibb.co/8zKqRms/overview.png)
+![image](https://i.ibb.co/VNTMm0p/overview.png)
 
 ### 震度速報
-![image](https://i.ibb.co/W30n2dw/intensity.png)
+![image](https://i.ibb.co/7SyWjkJ/intensity.png)
 
 ### 地震速報
-![image](https://i.ibb.co/bBRWdV3/eew.png)
+![image](https://i.ibb.co/D86t7SG/eew.png)
 
 ### 地震報告
-![image](https://i.ibb.co/9VktTck/report.png)
+![image](https://i.ibb.co/JQKJ22h/report.png)
 
 ### 長週期地震動
 ![image](https://i.ibb.co/GCqy70Z/lpgm.png)

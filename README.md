@@ -35,7 +35,7 @@
 - [ExpTech Studio](https://github.com/exptechtw) `圖片`
 
 > [!WARNING]
-> 此軟體圖片刷新速度由於api抓取問題，故無法第一時間更新最新的資料，延遲差不多2秒左右
+> 此軟體圖片刷新速度由於api抓取問題，故無法第一時間更新最新的資料
 
 ## 開發者
 

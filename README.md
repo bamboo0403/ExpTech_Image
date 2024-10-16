@@ -2,6 +2,8 @@
 
 **(所有資訊 僅供參考 以 中央氣象署 發布之內容為準)**
 
+- 對於此軟體有想要提出的意見，歡迎私訊我的discord `2008_04_03`
+
 ## 目錄
 
 - [簡介](#簡介)
@@ -47,8 +49,7 @@
 
 ## 使用
 
-從 [Release 頁面](https://github.com/2008-04-03/ExpTech_Image/releases/latest) 上取得。
-
+從 [Release 頁面](https://github.com/2008-04-03/ExpTech_Image/releases/latest) 上取得
 ## 範例圖片
 
 ### 總覽

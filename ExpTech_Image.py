@@ -169,7 +169,7 @@ last_get_pictures = {key: [] for key in [url.split("/")[-1] for url in base_urls
 
 
 def set_window():
-    global image_path
+    global image_path, is_first_run
     pygame.mixer.init()
     window.title("ExpTech Image v2.1-pre.3")
     window.geometry("888x650")
@@ -178,6 +178,7 @@ def set_window():
     if image_path:
         window.iconphoto(False, PhotoImage(file=image_path))
     slp(2)
+    is_first_run = False
     
 
 # def switch_sound():
@@ -317,7 +318,7 @@ def setting():
             save_sound_data()
             save_window_data()
             save_save_data()
-        
+
         # 創建全部開啟按鈕
         Button(title_frame, text="切換所有", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("sound"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=0, padx=5, pady=5)
         Button(title_frame, text="切換所有", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("window"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=1, padx=5, pady=5)

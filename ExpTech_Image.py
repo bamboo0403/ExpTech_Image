@@ -50,7 +50,7 @@ refreshms: int = 500
 all_refreshms: int = 2
 dev_update: int = 100
 image_base64_link: str = "https://pastebin.com/raw/KHfksC8W"
-is_first_run = False
+is_first_run = True
 
 # Advanced Config
 localappdata = getenv("LOCALAPPDATA")
@@ -171,29 +171,13 @@ last_get_pictures = {key: [] for key in [url.split("/")[-1] for url in base_urls
 def set_window():
     global image_path
     pygame.mixer.init()
-    window.title("ExpTech Image v2.1-pre.3")
+    window.title("ExpTech Image v2.1-pre.5")
     window.geometry("888x650")
     window.resizable(False, False)
     window.config(bg="#1f1f1f")
     if image_path:
         window.iconphoto(False, PhotoImage(file=image_path))
-    slp(2)
-    
 
-# def switch_sound():
-#     async def switch_sound_async():
-#         global is_sound, sound_btn
-#         is_sound = not is_sound
-#         if is_sound:
-#             sound_btn.config(text="關閉音效")
-#             for i, sound_path in enumerate(sounds.values()):
-#                 pygame.mixer.Channel(i).play(pygame.mixer.Sound(sound_path))
-#                 current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-#         else:
-#             sound_btn.config(text="開啟音效")
-#             pygame.mixer.stop()
-            
-#     Thread(target=asyncio.run, args=(switch_sound_async(),)).start()
 
 def set_button():
     button_frame = Frame(window, bg="#1f1f1f")

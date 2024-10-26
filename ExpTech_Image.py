@@ -30,6 +30,7 @@ import pygame
 from io import StringIO, BytesIO
 from json import load, dump
 from webbrowser import open as open_url
+from time import sleep as slp
 
 #color
 G = "\033[30m"
@@ -49,6 +50,7 @@ refreshms: int = 500
 all_refreshms: int = 2
 dev_update: int = 100
 image_base64_link: str = "https://pastebin.com/raw/KHfksC8W"
+is_first_run = False
 
 # Advanced Config
 localappdata = getenv("LOCALAPPDATA")
@@ -80,8 +82,6 @@ default_config = {
     }
 }
 
-# 初始化變量
-is_first_run = True
 
 if not exists(localappdata + "\\ExpTech_Image"):
     mkdir(localappdata + "\\ExpTech_Image")
@@ -177,6 +177,7 @@ def set_window():
     window.config(bg="#1f1f1f")
     if image_path:
         window.iconphoto(False, PhotoImage(file=image_path))
+    slp(2)
     
 
 # def switch_sound():

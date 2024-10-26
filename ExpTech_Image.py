@@ -83,7 +83,6 @@ default_config = {
 # 初始化變量
 is_first_run = True
 
-# 設置 logger
 if not exists(localappdata + "\\ExpTech_Image"):
     mkdir(localappdata + "\\ExpTech_Image")
 if not exists(config_saving_path):
@@ -263,7 +262,7 @@ def setting():
         title_frame = Frame(main_frame, bg="#1f1f1f")
         title_frame.grid(row=0, column=1, columnspan=3, sticky="ew")
         
-        titles = ["Sound", "Pop-up Window", "Save Photo"]
+        titles = ["音效", "彈窗", "儲存圖片"]
         for i, title in enumerate(titles):
             Label(title_frame, text=title, bg="#1f1f1f", fg="#ffffff").grid(row=0, column=i, padx=5, pady=5)
         
@@ -319,9 +318,9 @@ def setting():
             save_save_data()
         
         # 創建全部開啟按鈕
-        Button(title_frame, text="Switch All", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("sound"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=0, padx=5, pady=5)
-        Button(title_frame, text="Switch All", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("window"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=1, padx=5, pady=5)
-        Button(title_frame, text="Switch All", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("save"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=2, padx=5, pady=5)
+        Button(title_frame, text="切換所有", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("sound"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=0, padx=5, pady=5)
+        Button(title_frame, text="切換所有", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("window"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=1, padx=5, pady=5)
+        Button(title_frame, text="切換所有", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("save"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=2, padx=5, pady=5)
 
         # 創建選項行
         configdata = load_config()
@@ -334,37 +333,38 @@ def setting():
         eew_checkbuttons = []
         report_checkbuttons = []
         lpgm_checkbuttons = []
-        options = ["intensity", "eew", "report", "lpgm"]
+        options = ["震度速報", "地震速報", "地震報告", "長週期的震動"]
+        conf_options = ["intensity", "eew", "report", "lpgm"]
 
         # 讀取config.json並設置對應的BooleanVar
         for option in options:
             for j, setting_type in enumerate(check_button_options):
-                if configdata[setting_type][option]:
-                    if option == "intensity":
+                if configdata[setting_type][conf_options[i]]:
+                    if option == "震度速報":
                         intensity_vars[j].set(True)
-                    elif option == "eew":
+                    elif option == "地震速報":
                         eew_vars[j].set(True)
-                    elif option == "report":
+                    elif option == "地震報告":
                         report_vars[j].set(True)
-                    elif option == "lpgm":
+                    elif option == "長週期的震動":
                         lpgm_vars[j].set(True)
 
         for i, option in enumerate(options):
             Label(main_frame, text=option, bg="#1f1f1f", fg="#ffffff").grid(row=i+1, column=0, sticky="w", padx=5, pady=5)
             for j in range(3):
-                if option == "intensity":
+                if option == "震度速報":
                     cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, variable=intensity_vars[j])
                     cb.grid(row=i+1, column=j+1, padx=5, pady=5)
                     intensity_checkbuttons.append(cb)
-                elif option == "eew":
+                elif option == "地震速報":
                     cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, variable=eew_vars[j])
                     cb.grid(row=i+1, column=j+1, padx=5, pady=5)
                     eew_checkbuttons.append(cb)
-                elif option == "report":
+                elif option == "地震報告":
                     cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, variable=report_vars[j])
                     cb.grid(row=i+1, column=j+1, padx=5, pady=5)
                     report_checkbuttons.append(cb)
-                elif option == "lpgm":
+                elif option == "長週期的震動":
                     cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, variable=lpgm_vars[j])
                     cb.grid(row=i+1, column=j+1, padx=5, pady=5)
                     lpgm_checkbuttons.append(cb)
@@ -425,7 +425,6 @@ async def get_latest_image_url(session, base_url):
                     latest_image = max(links) if links else None
 
                 if latest_image:
-                    # logger.debug(f"fetch_image: {base_url}/{latest_image}")
                     return f"{base_url}/{latest_image}"
                 else:
                     print(f"{r}No .jpg links found at {base_url}{w}")
@@ -562,6 +561,13 @@ async def process_base_url(session, base_url, sound=True):
                             if configdata["sound"][typeofimage] and sound:
                                 sound_file = sounds[typeofimage]
                                 pygame.mixer.Sound(sound_file).play()
+                            if configdata["window"][typeofimage]:
+                                window.lift()
+                                window.focus_force()
+                                if window.state() == 'iconic':
+                                    window.deiconify()
+                                    window.attributes('-topmost', True)
+                                    window.attributes('-topmost', False)
     except Exception as e:
         print(f"{r}處理 {base_url} 時出錯: {e}{w}")
 

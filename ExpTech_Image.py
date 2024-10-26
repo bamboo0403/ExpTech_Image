@@ -163,7 +163,6 @@ def show_all_images():
     window.after(all_refreshms, update_image_size)
 
 window = Tk()
-# is_sound = False
 
 last_get_pictures = {key: [] for key in [url.split("/")[-1] for url in base_urls]}
 
@@ -338,19 +337,19 @@ def setting() -> None:
             Label(main_frame, text=option, bg="#1f1f1f", fg="#ffffff").grid(row=i+1, column=0, sticky="w", padx=5, pady=5)
             for j in range(3):
                 if option == "震度速報":
-                    cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, variable=intensity_vars[j])
+                    cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, activebackground="#1f1f1f", variable=intensity_vars[j])
                     cb.grid(row=i+1, column=j+1, padx=5, pady=5)
                     intensity_checkbuttons.append(cb)
                 elif option == "地震速報":
-                    cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, variable=eew_vars[j])
+                    cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, activebackground="#1f1f1f", variable=eew_vars[j])
                     cb.grid(row=i+1, column=j+1, padx=5, pady=5)
                     eew_checkbuttons.append(cb)
                 elif option == "地震報告":
-                    cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, variable=report_vars[j])
+                    cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, activebackground="#1f1f1f", variable=report_vars[j])
                     cb.grid(row=i+1, column=j+1, padx=5, pady=5)
                     report_checkbuttons.append(cb)
                 elif option == "長週期的震動":
-                    cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, variable=lpgm_vars[j])
+                    cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, activebackground="#1f1f1f", variable=lpgm_vars[j])
                     cb.grid(row=i+1, column=j+1, padx=5, pady=5)
                     lpgm_checkbuttons.append(cb)
 

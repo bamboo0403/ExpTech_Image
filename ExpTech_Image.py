@@ -170,7 +170,7 @@ last_get_pictures = {key: [] for key in [url.split("/")[-1] for url in base_urls
 def set_window():
     global image_path
     pygame.mixer.init()
-    window.title("ExpTech Image v2.1-pre.5")
+    window.title("ExpTech Image v2.1-pre.6")
     window.geometry("888x650")
     window.resizable(False, False)
     window.config(bg="#1f1f1f")

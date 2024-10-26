@@ -169,7 +169,7 @@ last_get_pictures = {key: [] for key in [url.split("/")[-1] for url in base_urls
 
 
 def set_window():
-    global image_path, is_first_run
+    global image_path
     pygame.mixer.init()
     window.title("ExpTech Image v2.1-pre.3")
     window.geometry("888x650")
@@ -178,7 +178,6 @@ def set_window():
     if image_path:
         window.iconphoto(False, PhotoImage(file=image_path))
     slp(2)
-    is_first_run = False
     
 
 # def switch_sound():
@@ -226,19 +225,47 @@ def set_button():
     global sound_btn
     sound_btn = button_frame.winfo_children()[-2]
 
-def load_config():
+def load_config() -> dict:
     with open(config_saving_path, "r", encoding="utf-8") as file:
         return load(file)
 
-def save_config(data):
+def save_config(data: dict):
     with open(config_saving_path, "w", encoding="utf-8") as file:
         dump(data, file, ensure_ascii=False, indent=4)
 
+def save_sound_data():
+    config = load_config()
+    config["sound"]["intensity"] = intensity_vars[0].get()
+    config["sound"]["eew"] = eew_vars[0].get()
+    config["sound"]["report"] = report_vars[0].get()
+    config["sound"]["lpgm"] = lpgm_vars[0].get()
+    save_config(config)
+
+def save_window_data():
+    config = load_config()
+    config["window"]["intensity"] = intensity_vars[1].get()
+    config["window"]["eew"] = eew_vars[1].get()
+    config["window"]["report"] = report_vars[1].get()
+    config["window"]["lpgm"] = lpgm_vars[1].get()
+    save_config(config)
+
+def save_save_data():
+    config = load_config()
+    config["save"]["intensity"] = intensity_vars[2].get()
+    config["save"]["eew"] = eew_vars[2].get()
+    config["save"]["report"] = report_vars[2].get()
+    config["save"]["lpgm"] = lpgm_vars[2].get()
+    save_config(config)
+
+def save_all_data():
+    save_sound_data()
+    save_window_data()
+    save_save_data()
 
 setting_window = None
 
-def setting():
-    global setting_window
+def setting() -> None:
+    global setting_window, intensity_vars, eew_vars, report_vars, lpgm_vars
     global image_path
     if setting_window is not None and setting_window.winfo_exists():
         setting_window.lift()
@@ -268,7 +295,8 @@ def setting():
         for i, title in enumerate(titles):
             Label(title_frame, text=title, bg="#1f1f1f", fg="#ffffff").grid(row=0, column=i, padx=5, pady=5)
         
-        check_button_options = ["sound", "window", "save"]
+        # check_button_options = ["sound", "window", "save"]
+        check_button_options: list[str] = [key for key in default_config.keys() if key != "image_saving_path"]
         
         def switch_all(option):
             if option not in check_button_options:
@@ -289,43 +317,13 @@ def setting():
                 report_checkbuttons[2].invoke()
                 lpgm_checkbuttons[2].invoke()
             # save_all_data()
-        
-        def save_sound_data():
-            config = load_config()
-            config["sound"]["intensity"] = intensity_vars[0].get()
-            config["sound"]["eew"] = eew_vars[0].get()
-            config["sound"]["report"] = report_vars[0].get()
-            config["sound"]["lpgm"] = lpgm_vars[0].get()
-            save_config(config)
-        
-        def save_window_data():
-            config = load_config()
-            config["window"]["intensity"] = intensity_vars[1].get()
-            config["window"]["eew"] = eew_vars[1].get()
-            config["window"]["report"] = report_vars[1].get()
-            config["window"]["lpgm"] = lpgm_vars[1].get()
-            save_config(config)
-        
-        def save_save_data():
-            config = load_config()
-            config["save"]["intensity"] = intensity_vars[2].get()
-            config["save"]["eew"] = eew_vars[2].get()
-            config["save"]["report"] = report_vars[2].get()
-            config["save"]["lpgm"] = lpgm_vars[2].get()
-            save_config(config)
-        
-        def save_all_data():
-            save_sound_data()
-            save_window_data()
-            save_save_data()
 
         # 創建全部開啟按鈕
-        Button(title_frame, text="切換所有", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("sound"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=0, padx=5, pady=5)
-        Button(title_frame, text="切換所有", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("window"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=1, padx=5, pady=5)
-        Button(title_frame, text="切換所有", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("save"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=2, padx=5, pady=5)
+        Button(title_frame, text="反向選擇", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("sound"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=0, padx=5, pady=5)
+        Button(title_frame, text="反向選擇", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("window"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=1, padx=5, pady=5)
+        Button(title_frame, text="反向選擇", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("save"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=2, padx=5, pady=5)
 
         # 創建選項行
-        configdata = load_config()
         intensity_vars = [BooleanVar() for _ in range(3)]
         eew_vars = [BooleanVar() for _ in range(3)]
         report_vars = [BooleanVar() for _ in range(3)]
@@ -339,17 +337,18 @@ def setting():
         conf_options = ["intensity", "eew", "report", "lpgm"]
 
         # 讀取config.json並設置對應的BooleanVar
-        for option in options:
+        configdata = load_config()
+        for i, option in enumerate(options):
             for j, setting_type in enumerate(check_button_options):
-                if configdata[setting_type][conf_options[i]]:
-                    if option == "震度速報":
-                        intensity_vars[j].set(True)
-                    elif option == "地震速報":
-                        eew_vars[j].set(True)
-                    elif option == "地震報告":
-                        report_vars[j].set(True)
-                    elif option == "長週期的震動":
-                        lpgm_vars[j].set(True)
+                checkbutton_status = configdata.get(setting_type, {}).get(conf_options[i], False)
+                if option == "震度速報":
+                    intensity_vars[j].set(checkbutton_status)
+                elif option == "地震速報":
+                    eew_vars[j].set(checkbutton_status)
+                elif option == "地震報告":
+                    report_vars[j].set(checkbutton_status)
+                elif option == "長週期的震動":
+                    lpgm_vars[j].set(checkbutton_status)
 
         for i, option in enumerate(options):
             Label(main_frame, text=option, bg="#1f1f1f", fg="#ffffff").grid(row=i+1, column=0, sticky="w", padx=5, pady=5)
@@ -592,6 +591,7 @@ def schedule_check():
 schedule_check()
 
 def on_closing():
+    save_all_data()
     pygame.mixer.music.unload()
     window.destroy()
 

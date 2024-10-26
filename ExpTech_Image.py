@@ -275,7 +275,7 @@ def setting() -> None:
         title_frame = Frame(main_frame, bg="#1f1f1f")
         title_frame.grid(row=0, column=1, columnspan=3, sticky="ew")
         
-        titles = ["音效", "彈窗", "儲存圖片"]
+        titles = ["音效", "彈跳視窗", "儲存圖片"]
         for i, title in enumerate(titles):
             Label(title_frame, text=title, bg="#1f1f1f", fg="#ffffff").grid(row=0, column=i, padx=5, pady=5)
         

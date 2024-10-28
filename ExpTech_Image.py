@@ -299,7 +299,6 @@ def setting() -> None:
                 eew_checkbuttons[2].invoke()
                 report_checkbuttons[2].invoke()
                 lpgm_checkbuttons[2].invoke()
-            # save_all_data()
 
         # 創建全部開啟按鈕
         Button(title_frame, text="反向選擇", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("sound"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=0, padx=5, pady=5)
@@ -354,8 +353,6 @@ def setting() -> None:
                     lpgm_checkbuttons.append(cb)
 
         # Button(main_frame, text="Save", bg="#2f2f2f", fg="#ffffff", command=save_sound_data, activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=4, column=0, padx=5, pady=5)
-        
-        setting_window.protocol("WM_DELETE_WINDOW", lambda: (save_all_data(), setting_window.destroy()))
 
         # 設置列和行的權重
         for i in range(5):
@@ -574,7 +571,6 @@ def schedule_check():
 schedule_check()
 
 def on_closing():
-    save_all_data()
     pygame.mixer.music.unload()
     window.destroy()
 

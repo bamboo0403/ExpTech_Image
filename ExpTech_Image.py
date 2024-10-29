@@ -545,11 +545,9 @@ async def process_base_url(session, base_url, sound=True):
                             if configdata["window"][typeofimage]:
                                 window.lift()
                                 window.focus_force()
-                                # 如果視窗處於最小化狀態，則將其還原並置於最上層
-                                if window.state() == 'iconic':
-                                    window.deiconify()
-                                    window.attributes('-topmost', True)
-                                    window.attributes('-topmost', False)
+                                window.deiconify()
+                                window.attributes('-topmost', True)
+                                window.attributes('-topmost', False)
     except Exception as e:
         print(f"{r}處理 {base_url} 時出錯: {e}{w}")
 

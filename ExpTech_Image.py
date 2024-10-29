@@ -524,11 +524,11 @@ async def process_base_url(session, base_url, sound=True):
                     typeofimage = base_url.split("/")[-1]
                     filename = latest_image_url.split("/")[-1]
                     try:
-                        storedfilename = last_get_pictures[typeofimage][-1]
+                        storedfilenames = last_get_pictures[typeofimage]
                     except IndexError:
-                        storedfilename = None
+                        storedfilenames = None
                     # if (current_hash != last_hashes[base_url]) and storedfilename != filename:
-                    if storedfilename != filename:
+                    if storedfilenames is None or filename not in storedfilenames:
                         # last_hashes[base_url] = current_hash
                         last_get_pictures[typeofimage].append(filename)
                         if len(last_get_pictures[typeofimage]) > 5:

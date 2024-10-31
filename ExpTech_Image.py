@@ -260,25 +260,31 @@ def setting() -> None:
     else:
         setting_window = Toplevel(window)
         setting_window.title("設定")
-        setting_window.geometry("400x300")
+        # 調整視窗大小為更小的尺寸
+        setting_window.geometry("350x250")  # 從原本的 400x300 改為 350x250
         setting_window.resizable(False, False)
         setting_window.config(bg="#1f1f1f")
         if image_path:
             setting_window.iconphoto(False, PhotoImage(file=image_path))
         
-        # 創建主框架
+        # 調整主框架的間距
         main_frame = Frame(setting_window, bg="#1f1f1f")
-        main_frame.pack(expand=True, fill=BOTH, padx=10, pady=10)
+        main_frame.pack(expand=True, fill=BOTH, padx=10, pady=10)  # 從 5 改為 10
 
-        # 創建標題行
+        # 調整標題行的間距
         title_frame = Frame(main_frame, bg="#1f1f1f")
-        title_frame.grid(row=0, column=1, columnspan=3, sticky="ew")
+        title_frame.grid(row=0, column=1, columnspan=3, sticky="ew", pady=5)  # 增加 pady=5
         
         titles = ["音效", "彈跳視窗", "儲存圖片"]
         for i, title in enumerate(titles):
-            Label(title_frame, text=title, bg="#1f1f1f", fg="#ffffff").grid(row=0, column=i, padx=5, pady=5)
+            Label(
+                title_frame, 
+                text=title, 
+                bg="#1f1f1f", 
+                fg="#ffffff",
+                padx=1  # 增加文字左右間距
+            ).grid(row=0, column=i+1, padx=1, pady=1)  # 從 3 改為 8 和 5
         
-        # check_button_options = ["sound", "window", "save"]
         check_button_options: list[str] = [key for key in default_config.keys() if key != "image_saving_path"]
         
         def switch_all(option):
@@ -300,10 +306,18 @@ def setting() -> None:
                 report_checkbuttons[2].invoke()
                 lpgm_checkbuttons[2].invoke()
 
-        # 創建全部開啟按鈕
-        Button(title_frame, text="反向選擇", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("sound"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=0, padx=5, pady=5)
-        Button(title_frame, text="反向選擇", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("window"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=1, padx=5, pady=5)
-        Button(title_frame, text="反向選擇", bg="#2f2f2f", fg="#ffffff", command=lambda: switch_all("save"), activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=1, column=2, padx=5, pady=5)
+        # 調整反向選擇按鈕的間距和大小
+        for i, option in enumerate(check_button_options):
+            Button(
+                title_frame, 
+                text="反向選擇", 
+                width=7,  # 從 10 改為 6
+                bg="#2f2f2f", 
+                fg="#ffffff", 
+                command=lambda opt=option: switch_all(opt), 
+                activebackground="#2f2f2f", 
+                activeforeground="#ffffff"
+            ).grid(row=1, column=i+1, padx=8, pady=8)
 
         # 創建選項行
         intensity_vars = [BooleanVar() for _ in range(3)]
@@ -318,7 +332,7 @@ def setting() -> None:
         options = ["震度速報", "地震速報", "地震報告", "長週期的震動"]
         conf_options = ["intensity", "eew", "report", "lpgm"]
 
-        # 讀取config.json並設置對應的BooleanVar
+        # 讀取配置
         configdata = load_config()
         for i, option in enumerate(options):
             for j, setting_type in enumerate(check_button_options):
@@ -332,27 +346,35 @@ def setting() -> None:
                 elif option == "長週期的震動":
                     lpgm_vars[j].set(checkbutton_status)
 
+        # 調整選項行的間距
         for i, option in enumerate(options):
-            Label(main_frame, text=option, bg="#1f1f1f", fg="#ffffff").grid(row=i+1, column=0, sticky="w", padx=5, pady=5)
+            Label(
+                main_frame, 
+                text=option, 
+                bg="#1f1f1f", 
+                fg="#ffffff",
+                padx=8  # 增加文字左右間距
+            ).grid(row=i+2, column=0, sticky="w", padx=8, pady=8)  # 從 3 改為 8
+            
             for j in range(3):
                 if option == "震度速報":
-                    cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, activebackground="#1f1f1f", variable=intensity_vars[j])
-                    cb.grid(row=i+1, column=j+1, padx=5, pady=5)
+                    cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", 
+                                   command=save_all_data, activebackground="#1f1f1f", 
+                                   variable=intensity_vars[j])
+                    cb.grid(row=i+2, column=j+1, padx=8, pady=8)  # 從 3 改為 8
                     intensity_checkbuttons.append(cb)
                 elif option == "地震速報":
                     cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, activebackground="#1f1f1f", variable=eew_vars[j])
-                    cb.grid(row=i+1, column=j+1, padx=5, pady=5)
+                    cb.grid(row=i+2, column=j+1, padx=8, pady=8)  # 從 3 改為 8
                     eew_checkbuttons.append(cb)
                 elif option == "地震報告":
                     cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, activebackground="#1f1f1f", variable=report_vars[j])
-                    cb.grid(row=i+1, column=j+1, padx=5, pady=5)
+                    cb.grid(row=i+2, column=j+1, padx=8, pady=8)  # 從 3 改為 8
                     report_checkbuttons.append(cb)
                 elif option == "長週期的震動":
                     cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, activebackground="#1f1f1f", variable=lpgm_vars[j])
-                    cb.grid(row=i+1, column=j+1, padx=5, pady=5)
+                    cb.grid(row=i+2, column=j+1, padx=8, pady=8)  # 從 3 改為 8
                     lpgm_checkbuttons.append(cb)
-
-        # Button(main_frame, text="Save", bg="#2f2f2f", fg="#ffffff", command=save_sound_data, activebackground="#2f2f2f", activeforeground="#ffffff").grid(row=4, column=0, padx=5, pady=5)
 
         # 設置列和行的權重
         for i in range(5):

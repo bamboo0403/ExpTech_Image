@@ -50,7 +50,7 @@ refreshms: int = 500
 all_refreshms: int = 2
 dev_update: int = 100
 image_base64_link: str = "https://pastebin.com/raw/KHfksC8W"
-is_first_run = False
+is_first_run = True
 
 # Advanced Config
 localappdata = getenv("LOCALAPPDATA")
@@ -662,7 +662,6 @@ try:
     def set_is_first_run_false():
         global is_first_run
         is_first_run = False
-    slp(1)
     window.after(5000, set_is_first_run_false)
     window.mainloop()
 except KeyboardInterrupt:

@@ -50,7 +50,7 @@ refreshms: int = 500
 all_refreshms: int = 2
 dev_update: int = 100
 image_base64_link: str = "https://pastebin.com/raw/KHfksC8W"
-is_first_run = True
+is_first_run = False
 
 # Advanced Config
 localappdata = getenv("LOCALAPPDATA")
@@ -260,8 +260,8 @@ def setting() -> None:
     else:
         setting_window = Toplevel(window)
         setting_window.title("設定")
-        # 調整視窗大小為更小的尺寸
-        setting_window.geometry("350x250")  # 從原本的 400x300 改為 350x250
+        # 調整視窗大小以容納新的路徑選擇區域
+        setting_window.geometry("350x300")  # 從 250 改為 300
         setting_window.resizable(False, False)
         setting_window.config(bg="#1f1f1f")
         if image_path:
@@ -354,26 +354,26 @@ def setting() -> None:
                 bg="#1f1f1f", 
                 fg="#ffffff",
                 padx=8  # 增加文字左右間距
-            ).grid(row=i+2, column=0, sticky="w", padx=8, pady=8)  # 從 3 改為 8
+            ).grid(row=i+2, column=0, sticky="w", padx=8, pady=8)
             
             for j in range(3):
                 if option == "震度速報":
                     cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", 
                                    command=save_all_data, activebackground="#1f1f1f", 
                                    variable=intensity_vars[j])
-                    cb.grid(row=i+2, column=j+1, padx=8, pady=8)  # 從 3 改為 8
+                    cb.grid(row=i+2, column=j+1, padx=8, pady=8)
                     intensity_checkbuttons.append(cb)
                 elif option == "地震速報":
                     cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, activebackground="#1f1f1f", variable=eew_vars[j])
-                    cb.grid(row=i+2, column=j+1, padx=8, pady=8)  # 從 3 改為 8
+                    cb.grid(row=i+2, column=j+1, padx=8, pady=8)
                     eew_checkbuttons.append(cb)
                 elif option == "地震報告":
                     cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, activebackground="#1f1f1f", variable=report_vars[j])
-                    cb.grid(row=i+2, column=j+1, padx=8, pady=8)  # 從 3 改為 8
+                    cb.grid(row=i+2, column=j+1, padx=8, pady=8) 
                     report_checkbuttons.append(cb)
                 elif option == "長週期的震動":
                     cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", command=save_all_data, activebackground="#1f1f1f", variable=lpgm_vars[j])
-                    cb.grid(row=i+2, column=j+1, padx=8, pady=8)  # 從 3 改為 8
+                    cb.grid(row=i+2, column=j+1, padx=8, pady=8)
                     lpgm_checkbuttons.append(cb)
 
         # 設置列和行的權重
@@ -381,6 +381,59 @@ def setting() -> None:
             main_frame.grid_rowconfigure(i, weight=1)
         for i in range(4):
             main_frame.grid_columnconfigure(i, weight=1)
+
+        # 添加路徑選擇區域
+        path_frame = Frame(setting_window, bg="#1f1f1f")
+        path_frame.pack(side="bottom", fill="x", padx=10, pady=10)
+
+        # 路徑輸入框
+        path_entry = Text(path_frame, height=1, width=40, bg="#2f2f2f", fg="#ffffff")  # 從 width=35 改為 40
+        path_entry.pack(side="left", padx=(0, 5))
+
+        # 讀取當前路徑設定
+        config = load_config()
+        # 從 intensity 的路徑中獲取父目錄路徑
+        current_path = dirname(config["image_saving_path"]["intensity"]) if config["image_saving_path"]["intensity"] else ""
+        path_entry.insert("1.0", current_path)
+        path_entry.config(state="disabled")  # 設為唯讀
+
+        def select_path():
+            folder_path = filedialog.askdirectory()
+            if folder_path:
+                # 更新顯示
+                path_entry.config(state="normal")
+                path_entry.delete("1.0", END)
+                path_entry.insert("1.0", folder_path)
+                path_entry.config(state="disabled")
+                
+                # 創建子資料夾
+                subfolders = ["intensity", "eew", "report", "lpgm"]
+                for subfolder in subfolders:
+                    subfolder_path = pathjoin(folder_path, subfolder)
+                    if not exists(subfolder_path):
+                        mkdir(subfolder_path)
+                
+                # 保存到配置
+                config = load_config()
+                # 更新所有圖片保存路徑
+                config["image_saving_path"]["intensity"] = pathjoin(folder_path, "intensity")
+                config["image_saving_path"]["eew"] = pathjoin(folder_path, "eew")
+                config["image_saving_path"]["report"] = pathjoin(folder_path, "report")
+                config["image_saving_path"]["lpgm"] = pathjoin(folder_path, "lpgm")
+                save_config(config)
+
+        # 路徑選擇按鈕
+        path_button = Button(
+            path_frame,
+            text="路徑",
+            command=select_path,
+            bg="#2f2f2f",
+            fg="#ffffff",
+            activebackground="#2f2f2f",
+            activeforeground="#ffffff",
+            width=6
+        )
+        path_button.pack(side="left")
 
 thread = False
 # last_hashes = {url: None for url in base_urls}
@@ -536,31 +589,29 @@ async def process_base_url(session, base_url, sound=True):
     global is_first_run
     try:
         latest_image_url = await get_latest_image_url(session, base_url)
-        # if latest_image_url and latest_image_url != last_sent_urls[base_url]:
         if latest_image_url:
             image_data = await fetch_image(session, latest_image_url)       
             if latest_image_url:
                 image_data = await fetch_image(session, latest_image_url)
                 if image_data:
-                    # current_hash = hashlib.md5(image_data).hexdigest()
                     typeofimage = base_url.split("/")[-1]
                     filename = latest_image_url.split("/")[-1]
                     try:
                         storedfilenames = last_get_pictures[typeofimage]
                     except IndexError:
                         storedfilenames = None
-                    # if (current_hash != last_hashes[base_url]) and storedfilename != filename:
+                    
                     if storedfilenames is None or filename not in storedfilenames:
-                        # last_hashes[base_url] = current_hash
                         last_get_pictures[typeofimage].append(filename)
                         if len(last_get_pictures[typeofimage]) > 5:
                             last_get_pictures[typeofimage].pop(0)
                         show_image(base_url, image_data)
-                        # if is_sound and sound:
+                        
                         configdata = load_config()
                         if is_first_run:
                             return
                         else:
+                            # 處理音效和視窗
                             if configdata["sound"][typeofimage] and sound:
                                 sound_file = sounds[typeofimage]
                                 pygame.mixer.Sound(sound_file).play()
@@ -570,6 +621,17 @@ async def process_base_url(session, base_url, sound=True):
                                 window.deiconify()
                                 window.attributes('-topmost', True)
                                 window.attributes('-topmost', False)
+                            
+                            # 新增: 保存圖片
+                            if configdata["save"][typeofimage]:
+                                save_path = configdata["image_saving_path"][typeofimage]
+                                if save_path and exists(dirname(save_path)):  # 確保目錄存在
+                                    full_path = pathjoin(save_path, filename)
+                                    try:
+                                        with open(full_path, "wb") as f:
+                                            f.write(image_data)
+                                    except Exception as e:
+                                        print(f"{r}保存圖片時發生錯誤：{e}{w}")
     except Exception as e:
         print(f"{r}處理 {base_url} 時出錯: {e}{w}")
 
@@ -600,6 +662,7 @@ try:
     def set_is_first_run_false():
         global is_first_run
         is_first_run = False
+    slp(1)
     window.after(5000, set_is_first_run_false)
     window.mainloop()
 except KeyboardInterrupt:

@@ -20,17 +20,16 @@ import aiohttp
 # import hashlib
 from PIL import Image, ImageTk
 from threading import Thread    
-from os.path import join as pathjoin, dirname, basename, exists
+from os.path import join as pathjoin, dirname, exists
 from os import getenv, mkdir
 from requests import get
 import tempfile
 from base64 import b64decode
 import pygame
 # import sys
-from io import StringIO, BytesIO
+from io import BytesIO
 from json import load, dump
 from webbrowser import open as open_url
-from time import sleep as slp
 
 #color
 G = "\033[30m"
@@ -358,9 +357,11 @@ def setting() -> None:
             
             for j in range(3):
                 if option == "震度速報":
-                    cb = Checkbutton(main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", 
-                                   command=save_all_data, activebackground="#1f1f1f", 
-                                   variable=intensity_vars[j])
+                    cb = Checkbutton(
+                        main_frame, bg="#1f1f1f", fg="#ffffff", selectcolor="#1f1f1f", 
+                        command=save_all_data, activebackground="#1f1f1f", 
+                        variable=intensity_vars[j]
+                    )
                     cb.grid(row=i+2, column=j+1, padx=8, pady=8)
                     intensity_checkbuttons.append(cb)
                 elif option == "地震速報":

@@ -59,19 +59,23 @@
 ## 使用
 
 從 [Release 頁面](https://github.com/2008-04-03/ExpTech_Image/releases/latest) 上取得
+
 ## 範例圖片
 
 ### 總覽
-![image](https://i.ibb.co/VNTMm0p/overview.png)
+![image](https://i.ibb.co/6gZs5fb/overview.png)
 
 ### 震度速報
-![image](https://i.ibb.co/7SyWjkJ/intensity.png)
+![image](https://i.ibb.co/47hfQVW/intensity.png)
 
 ### 地震速報
-![image](https://i.ibb.co/D86t7SG/eew.png)
+![image](https://i.ibb.co/NKSqVrX/eew.png)
 
 ### 地震報告
-![image](https://i.ibb.co/JQKJ22h/report.png)
+![image](https://i.ibb.co/F01wq9Y/report.png)
 
 ### 長週期地震動
-![image](https://i.ibb.co/GCqy70Z/lpgm.png)
+![image](https://i.ibb.co/6bdk0WP/lpgm.png)
+
+### 設定
+![image](https://i.ibb.co/Fw4VqgP/setting.png)

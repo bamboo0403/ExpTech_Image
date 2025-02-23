@@ -109,14 +109,11 @@ def download_and_save_image():
     global image_path
     try:
         response = get(image_base64_link)
-        if response.status_code == 200:
-            temp_dir = tempfile.gettempdir()
-            image_path = pathjoin(temp_dir, "ExpTech.png")
-            with open(image_path, "wb") as file:
-                file.write(b64decode(response.text))
-        else:
-            print(f"{r}下載圖片時發生錯誤：{response.status_code}{w}")
-            image_path = None
+        response.raise_for_status()
+        temp_dir = tempfile.gettempdir()
+        image_path = pathjoin(temp_dir, "ExpTech.png")
+        with open(image_path, "wb") as file:
+            file.write(b64decode(response.text))
     except Exception as e:
         print(f"{r}下載圖片時發生錯誤：{e}{w}")
         image_path = None

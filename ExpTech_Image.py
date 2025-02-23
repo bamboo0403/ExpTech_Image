@@ -115,7 +115,7 @@ def download_and_save_image():
         with open(image_path, "wb") as file:
             file.write(b64decode(response.text))
     except Exception as e:
-        print(f"{r}下載圖片時發生錯誤：{e}{w}")
+        print(f"{r}下載圖片時發生錯誤：{e} 狀態碼：{response.status_code if response else '無'}{w}")
         image_path = None
 
 download_and_save_image()
